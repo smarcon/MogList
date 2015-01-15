@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MogListApp</string>
+    <string name="action_settings">Settings</string>
+    <string name="login">Login</string>
+	<string name="forgot_password">Forgot your password?</string>
+	<string name="new_account">Create a new account</string>
+
+</resources>
