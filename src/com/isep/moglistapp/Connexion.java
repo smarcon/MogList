@@ -1,8 +1,10 @@
 package com.isep.moglistapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,19 +27,23 @@ public class Connexion extends Activity {
 		password = (EditText) findViewById(R.id.editText2);
 		login = (Button) findViewById(R.id.button1);
 		
+		//listening to button event
+		login.setOnClickListener(new View.OnClickListener(){
+			public void onClick(View arg0){
+				//starting a new intent (to open new activity)
+				Intent nextScreen = new Intent(getApplicationContext(), HomeActivity.class);
+				
+				//Sending data to another Activity
+				nextScreen.putExtra("name", username.getText().toString());
+				nextScreen.putExtra("pwd", password.getText().toString());
+		
+				Log.e("n", username.getText()+"."+password.getText());
+				
+				startActivity(nextScreen);
+			}
+		});
 	}
 
-	public void login(View view) {
-		if (username.getText().toString().equals("admin")
-				&& password.getText().toString().equals("admin")) {
-			Toast.makeText(getApplicationContext(), "Redirecting...",
-					Toast.LENGTH_SHORT).show();
-		} else {
-			Toast.makeText(getApplicationContext(), "Wrong Credentials",
-					Toast.LENGTH_SHORT).show();
-			attempts.setBackgroundColor(Color.RED);
-		}
-	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

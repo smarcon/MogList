@@ -30,8 +30,7 @@
         android:layout_alignRight="@+id/editText2"
         android:layout_marginBottom="15dp"
         android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
+        android:hint="username"
         android:textColor="#ff6600" />
 
     <Button
