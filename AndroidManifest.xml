@@ -23,8 +23,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login"
+            android:name=".Connexion"
+            android:label="@string/title_activity_connexion"
             android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
         <activity

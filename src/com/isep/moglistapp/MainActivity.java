@@ -1,6 +1,7 @@
 package com.isep.moglistapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
@@ -21,23 +22,10 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		username = (EditText)findViewById(R.id.editText1);
-	    password = (EditText)findViewById(R.id.editText2);
-	    login = (Button)findViewById(R.id.button1);
+		
+		startActivityForResult(new Intent(this, Connexion.class),0);
 	}
 	
-	   public void login(View view){
-		      if(username.getText().toString().equals("admin") && 
-		      password.getText().toString().equals("admin")){
-		      Toast.makeText(getApplicationContext(), "Redirecting...", 
-		      Toast.LENGTH_SHORT).show();
-		   }	
-		   else{
-		      Toast.makeText(getApplicationContext(), "Wrong Credentials",
-		      Toast.LENGTH_SHORT).show();
-		      attempts.setBackgroundColor(Color.RED);
-		   }
-	   }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
