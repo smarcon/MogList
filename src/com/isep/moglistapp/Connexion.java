@@ -17,6 +17,8 @@ public class Connexion extends Activity {
 	private EditText username = null;
 	private EditText password = null;
 	private TextView register;
+	private TextView attempts;
+	@SuppressWarnings("unused")
 	private Button login;
 
 	@Override
