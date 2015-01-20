@@ -16,30 +16,38 @@ import android.widget.Toast;
 public class Connexion extends Activity {
 	private EditText username = null;
 	private EditText password = null;
-	private TextView attempts;
+	private TextView register;
 	private Button login;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_connexion);
-		username = (EditText) findViewById(R.id.editText1);
-		password = (EditText) findViewById(R.id.editText2);
-		login = (Button) findViewById(R.id.button1);
+		username = (EditText) findViewById(R.id.username);
+		password = (EditText) findViewById(R.id.password);
+		login = (Button) findViewById(R.id.login);
+		register = (TextView) findViewById(R.id.register);
 		
 		//listening to button event
 		login.setOnClickListener(new View.OnClickListener(){
-			public void onClick(View arg0){
+			public void onClick(View arg){
 				//starting a new intent (to open new activity)
-				Intent nextScreen = new Intent(getApplicationContext(), HomeActivity.class);
+				Intent HomeScreen = new Intent(getApplicationContext(), HomeActivity.class);
 				
 				//Sending data to another Activity
-				nextScreen.putExtra("name", username.getText().toString());
-				nextScreen.putExtra("pwd", password.getText().toString());
+				HomeScreen.putExtra("name", username.getText().toString());
+				HomeScreen.putExtra("pwd", password.getText().toString());
 		
 				Log.e("n", username.getText()+"."+password.getText());
 				
-				startActivity(nextScreen);
+				startActivity(HomeScreen);
+			}
+		});
+		
+		register.setOnClickListener(new View.OnClickListener(){
+			public void onClick(View arg){
+				Intent RegisterScreen = new Intent(getApplicationContext(), RegisterActivity.class);
+				startActivity(RegisterScreen);
 			}
 		});
 	}

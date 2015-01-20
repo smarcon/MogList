@@ -6,5 +6,6 @@
     <string name="login">Login</string>
 	<string name="forgot_password">Forgot your password?</string>
 	<string name="new_account">Create a new account</string>
+	<string name="register">Créer un compte</string>
 
 </resources>

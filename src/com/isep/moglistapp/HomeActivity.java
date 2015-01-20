@@ -11,11 +11,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class HomeActivity extends Activity {
+	private Button newList;
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
- 
+        newList = (Button) findViewById(R.id.btnNewList);
+        
         TextView txtName = (TextView) findViewById(R.id.txtName);
         TextView txtEmail = (TextView) findViewById(R.id.txtEmail);
         //Button btnClose = (Button) findViewById(R.id.btnClose);
@@ -48,5 +50,12 @@ public class HomeActivity extends Activity {
             }
         });*/
  
+        //Launch the activity to add a new list
+        newList.setOnClickListener(new View.OnClickListener(){
+        	public void onClick(View arg){
+        		Intent newListScreen = new Intent(getApplicationContext(), NewListActivity.class);
+        		startActivity(newListScreen);
+        	}
+        });
     }
 }

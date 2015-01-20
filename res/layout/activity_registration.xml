@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_home" >
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/check_password"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="152dp"
+        android:ems="10"
+        android:textColor="#ff6600"
+        android:hint="Username" />
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/username"
+        android:layout_below="@+id/username"
+        android:ems="10"
+        android:textColor="#ff6600"
+        android:inputType="textEmailAddress"
+        android:hint="Email"/>
+ 
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/email"
+        android:layout_alignRight="@+id/email"
+        android:layout_below="@+id/email"
+        android:ems="10"
+        android:textColor="#ff6600"
+        android:inputType="textPassword"
+        android:hint="Mot de passe" />
+
+    <EditText
+        android:id="@+id/check_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/password"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:textColor="#ff6600"
+        android:inputType="textPassword"
+        android:hint="Retaper Mot de passe" />
+
+    <TextView
+        android:id="@+id/connection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:text="Se connecter"
+        android:textColor="#ff6600"
+        android:textSize="15dp" />
+
+    <Button
+        android:id="@+id/register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/connection"
+        android:layout_alignLeft="@+id/check_password"
+        android:layout_alignRight="@+id/password"
+        android:layout_marginBottom="39dp"
+        android:text="Créer un compte"
+        android:textColor="#ff6600"
+        android:textSize="15dp" />
+
+</RelativeLayout>
