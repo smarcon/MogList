@@ -1,31 +1,45 @@
 package com.isep.moglistapp;
 
+import java.util.Date;
+
 import android.app.Activity;
-import android.graphics.Color;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.parse.Parse;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 public class MainActivity extends Activity {
-	private EditText  username=null;
-	private EditText  password=null;
-	private TextView attempts;
-	private Button login;
 
+	String APPLICATION_ID = "78rBpEkRL6SHwYFELI6P9r1uIrOlvR0n81BQLgvh";
+	String CLIENT_KEY = "vFK3t99ihwKty5J78N72pg6XCFNtNAfDDXMF8t7C";
+
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		username = (EditText)findViewById(R.id.editText1);
-	    password = (EditText)findViewById(R.id.editText2);
-	    login = (Button)findViewById(R.id.button1);
+
+		Parse.initialize(this, APPLICATION_ID, CLIENT_KEY);
+
+		ParseObject testObject = new ParseObject("openedAt");
+		Date d = new Date();
+		d.setHours(d.getHours() + 1);
+		testObject.put("date", d);
+		testObject.saveInBackground();
+
+		if (ParseUser.getCurrentUser() != null) {
+			startActivity(new Intent(this, Connexion.class));
+		} else {
+			startActivity(new Intent(this, MyLists.class));
+		}
 	}
-	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
