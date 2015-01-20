@@ -13,6 +13,7 @@
     <string name="title_activity_my_lists">My Lists</string>
     <string name="action_new">New List</string>
     <string name="action_refresh">Refresh</string>
+    <string name="bell">notif</string>
 
 </resources>
    

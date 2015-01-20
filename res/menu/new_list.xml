@@ -3,9 +3,16 @@
     tools:context="com.isep.moglistapp.NewList" >
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/bell"
+        android:icon="@drawable/bell"
         android:orderInCategory="100"
-        android:showAsAction="never"
+        android:showAsAction="always"
+        android:title="@string/bell"/>
+       <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/settings"
+        android:orderInCategory="100"
+        android:showAsAction="always"
         android:title="@string/action_settings"/>
 
 </menu>
