@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
 		testObject.put("date", d);
 		testObject.saveInBackground();
 
-		if (ParseUser.getCurrentUser() != null) {
+		if (ParseUser.getCurrentUser() == null) {
 			startActivity(new Intent(this, Connexion.class));
 		} else {
 			startActivity(new Intent(this, HomeActivity.class));
