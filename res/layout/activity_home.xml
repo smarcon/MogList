@@ -1,35 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/background" >
+    android:background="@drawable/background"
+    android:orientation="vertical" >
 
- 
-  <TextView android:id="@+id/txtName"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dip"
-            android:textSize="18sp"/>
- 
-  <TextView android:id="@+id/txtEmail"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dip"
-            android:textSize="18sp"/>
+    <TextView
+        android:id="@+id/txtName"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dip"
+        android:textSize="18sp" />
 
-  <ListView
-      android:id="@+id/list"
-      android:layout_width="match_parent"
-      android:layout_height="209dp"
-      android:layout_marginTop="70dip" >
-  </ListView>
+    <TextView
+        android:id="@+id/txtEmail"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dip"
+        android:textSize="18sp" />
 
-  <Button
-      android:id="@+id/btnNewList"
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="15dip"
-      android:text="Add a new list" />
-  
-</LinearLayout>
+    <Button
+        android:id="@+id/btnNewList"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="115dp"
+        android:text="@string/newList" />
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="209dp"
+        android:layout_above="@+id/btnNewList"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true" >
+    </ListView>
+
+</RelativeLayout>

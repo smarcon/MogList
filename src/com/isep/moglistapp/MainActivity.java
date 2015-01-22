@@ -37,7 +37,7 @@ public class MainActivity extends Activity {
 		if (ParseUser.getCurrentUser() != null) {
 			startActivity(new Intent(this, Connexion.class));
 		} else {
-			startActivity(new Intent(this, MyLists.class));
+			startActivity(new Intent(this, HomeActivity.class));
 		}
 	}
 
