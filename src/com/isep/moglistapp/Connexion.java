@@ -50,8 +50,7 @@ public class Connexion extends Activity {
 									// Sending data to another Activity
 									// HomeScreen.putExtra("name",
 									// username.getText().toString());
-									// HomeScreen.putExtra("pwd",
-									// password.getText().toString());
+									 //HomeScreen.putExtra("pwd", password.getText().toString());
 									Log.e("n", username.getText() + "."
 											+ password.getText());
 
