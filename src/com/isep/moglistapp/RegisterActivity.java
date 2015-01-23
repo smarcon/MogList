@@ -45,7 +45,9 @@ public class RegisterActivity extends Activity {
 		register.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (username.getText().toString() != null && mail.getText().toString() != null && pwd.getText().toString() != null) {
+				if (username.getText().toString() != null
+						&& mail.getText().toString() != null
+						&& pwd.getText().toString() != null) {
 					if ((pwd.getText().toString()).equals((pwdConf.getText()
 							.toString()))) {
 						ParseUser user = new ParseUser();
@@ -56,21 +58,29 @@ public class RegisterActivity extends Activity {
 						user.signUpInBackground(new SignUpCallback() {
 							public void done(ParseException e) {
 								if (e == null) {
-									startActivity(new Intent(
+									Intent HomeScreen = new Intent(
 											getApplicationContext(),
-											HomeActivity.class));
+											HomeActivity.class);
+									HomeScreen.putExtra("name", username.getText().toString());
+									startActivity(HomeScreen);
 								} else {
-									Toast.makeText(getBaseContext(),"Error : " + e.toString().substring(25),
+									Toast.makeText(
+											getBaseContext(),
+											"Error : "
+													+ e.toString()
+															.substring(25),
 											Toast.LENGTH_LONG).show();
 								}
 							}
 						});
 					} else {
-						Toast.makeText(getBaseContext(), "Erreur : Mot de passe non confirmé",
+						Toast.makeText(getBaseContext(),
+								"Erreur : Mot de passe non confirmé",
 								Toast.LENGTH_LONG).show();
 					}
 				} else {
-					Toast.makeText(getBaseContext(), "Erreur : Veuillez remplir tous les champs svp.",
+					Toast.makeText(getBaseContext(),
+							"Erreur : Veuillez remplir tous les champs svp.",
 							Toast.LENGTH_LONG).show();
 				}
 

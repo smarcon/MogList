@@ -5,36 +5,23 @@
     android:background="@drawable/background"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/txtName"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dip"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/txtEmail"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dip"
-        android:textSize="18sp" />
 
     <Button
         android:id="@+id/btnNewList"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="115dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
         android:text="@string/newList" />
 
     <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
-        android:layout_height="209dp"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/btnNewList"
         android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true" >
+        android:layout_marginTop="190dp" >
     </ListView>
 
 </RelativeLayout>

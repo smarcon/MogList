@@ -35,30 +35,28 @@ public final class R {
         public static final int settings=0x7f02000a;
     }
     public static final class id {
-        public static final int action_logout=0x7f080018;
-        public static final int action_new=0x7f080015;
-        public static final int action_refresh=0x7f080014;
-        public static final int action_settings=0x7f080017;
-        public static final int add=0x7f08000f;
-        public static final int add_list=0x7f080010;
-        public static final int add_people=0x7f08000d;
-        public static final int back=0x7f080009;
-        public static final int bell=0x7f080016;
-        public static final int btnNewList=0x7f080007;
-        public static final int check_password=0x7f080011;
-        public static final int connection=0x7f080013;
-        public static final int email=0x7f080012;
-        public static final int list_people=0x7f08000c;
+        public static final int action_logout=0x7f080016;
+        public static final int action_new=0x7f080013;
+        public static final int action_refresh=0x7f080012;
+        public static final int action_settings=0x7f080015;
+        public static final int add=0x7f08000d;
+        public static final int add_list=0x7f08000e;
+        public static final int add_people=0x7f08000b;
+        public static final int back=0x7f080007;
+        public static final int bell=0x7f080014;
+        public static final int btnNewList=0x7f080005;
+        public static final int check_password=0x7f080010;
+        public static final int connection=0x7f080011;
+        public static final int email=0x7f08000f;
+        public static final int list_people=0x7f08000a;
         public static final int login=0x7f080003;
         public static final int lost_pwd=0x7f080002;
-        public static final int name=0x7f08000b;
-        public static final int new_list=0x7f08000a;
-        public static final int new_taks=0x7f080008;
+        public static final int name=0x7f080009;
+        public static final int new_list=0x7f080008;
+        public static final int new_taks=0x7f080006;
         public static final int password=0x7f080001;
-        public static final int people=0x7f08000e;
+        public static final int people=0x7f08000c;
         public static final int register=0x7f080004;
-        public static final int txtEmail=0x7f080006;
-        public static final int txtName=0x7f080005;
         public static final int username=0x7f080000;
     }
     public static final class layout {

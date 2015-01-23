@@ -48,12 +48,7 @@ public class Connexion extends Activity {
 											HomeActivity.class);
 
 									// Sending data to another Activity
-									// HomeScreen.putExtra("name",
-									// username.getText().toString());
-									 //HomeScreen.putExtra("pwd", password.getText().toString());
-									Log.e("n", username.getText() + "."
-											+ password.getText());
-
+									HomeScreen.putExtra("name", username.getText().toString());
 									startActivity(HomeScreen);
 								} else {
 									Toast.makeText(getBaseContext(),

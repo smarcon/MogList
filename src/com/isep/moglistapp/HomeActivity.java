@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -33,28 +32,13 @@ public class HomeActivity extends ListActivity {
 			super.onCreate(savedInstanceState);
 			requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 			setContentView(R.layout.activity_home);
-
 			myLists = new ArrayList<ListMog>();
 			ArrayAdapter<ListMog> adapter = new ArrayAdapter<ListMog>(this,
 					R.layout.list_item_layout, myLists);
 			setListAdapter(adapter);
-
 			refreshMogLists();
 
 			newList = (Button) findViewById(R.id.btnNewList);
-
-			TextView txtName = (TextView) findViewById(R.id.txtName);
-			TextView txtEmail = (TextView) findViewById(R.id.txtEmail);
-			// Button btnClose = (Button) findViewById(R.id.btnClose);
-
-			Intent i = getIntent();
-			// Receiving the Data
-			String username = i.getStringExtra("name");
-			String password = i.getStringExtra("pwd");
-
-			// TEST : Displaying Received data
-			txtName.setText(username);
-			txtEmail.setText(password);
 
 			// Launch the activity to add a new list
 			newList.setOnClickListener(new View.OnClickListener() {
@@ -69,9 +53,12 @@ public class HomeActivity extends ListActivity {
 
 	private void refreshMogLists() {
 
-		ParseQuery<ParseObject> query = ParseQuery.getQuery("list");
+		// Retrieve data
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("MogList");
+		query.whereEqualTo("viewers", ParseUser.getCurrentUser());
 		query.addAscendingOrder("nameList");
 		setProgressBarIndeterminateVisibility(true);
+		
 		query.findInBackground(new FindCallback<ParseObject>() {
 			@SuppressWarnings("unchecked")
 			@Override
@@ -109,7 +96,7 @@ public class HomeActivity extends ListActivity {
 		switch (item.getItemId()) {
 		case R.id.action_logout:
 			ParseUser.logOut();
-			startActivity(new Intent(this,Connexion.class));
+			startActivity(new Intent(this, Connexion.class));
 			return true;
 		case R.id.action_settings:
 			return true;
