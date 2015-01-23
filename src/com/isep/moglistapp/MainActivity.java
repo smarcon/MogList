@@ -7,13 +7,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.parse.Parse;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+
 
 public class MainActivity extends Activity {
 
@@ -33,7 +31,6 @@ public class MainActivity extends Activity {
 		d.setHours(d.getHours() + 1);
 		testObject.put("date", d);
 		testObject.saveInBackground();
-
 		if (ParseUser.getCurrentUser() == null) {
 			startActivity(new Intent(this, Connexion.class));
 		} else {

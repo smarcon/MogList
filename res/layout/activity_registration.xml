@@ -10,10 +10,11 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/check_password"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="152dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="300dp"
         android:ems="10"
         android:textColor="#ff6600"
-        android:hint="Username" />
+        android:hint="@string/username" />
 
     <EditText
         android:id="@+id/email"
@@ -24,7 +25,7 @@
         android:ems="10"
         android:textColor="#ff6600"
         android:inputType="textEmailAddress"
-        android:hint="Email"/>
+        android:hint="@string/mail"/>
  
 
     <EditText
@@ -37,7 +38,7 @@
         android:ems="10"
         android:textColor="#ff6600"
         android:inputType="textPassword"
-        android:hint="Mot de passe" />
+        android:hint="@string/mdp" />
 
     <EditText
         android:id="@+id/check_password"
@@ -48,7 +49,7 @@
         android:ems="10"
         android:textColor="#ff6600"
         android:inputType="textPassword"
-        android:hint="Retaper Mot de passe" />
+        android:hint="@string/mdp2" />
 
     <TextView
         android:id="@+id/connection"
@@ -57,9 +58,9 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
-        android:text="Se connecter"
+        android:text="@string/login"
         android:textColor="#ff6600"
-        android:textSize="15dp" />
+        android:textSize="15sp" />
 
     <Button
         android:id="@+id/register"
@@ -69,8 +70,8 @@
         android:layout_alignLeft="@+id/check_password"
         android:layout_alignRight="@+id/password"
         android:layout_marginBottom="39dp"
-        android:text="Créer un compte"
+        android:text="@string/go"
         android:textColor="#ff6600"
-        android:textSize="15dp" />
+        android:textSize="15sp" />
 
 </RelativeLayout>

@@ -64,7 +64,8 @@
         </activity>
         
 		<activity android:name=".HomeActivity"></activity>
-		<activity android:name=".RegisterActivity"></activity>
+		<activity android:name=".RegisterActivity"
+		    android:label="@string/register"></activity>
 		<activity android:name=".NewListActivity"></activity>
 
         <service android:name="com.parse.PushService" />
