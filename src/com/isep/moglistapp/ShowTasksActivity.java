@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -21,59 +20,65 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-public class HomeActivity extends ListActivity {
-	private Button newList;
-	private List<BeanMog> myLists;
+public class ShowTasksActivity extends ListActivity {
+	private Button newTask;
+	private List<BeanTask> myTasks;
+	private String id;
+	private Intent i;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		i = getIntent();
+		id = i.getStringExtra("mogListId");
 		if (ParseUser.getCurrentUser() == null) {
 			startActivity(new Intent(this, Connexion.class));
 		} else {
 			super.onCreate(savedInstanceState);
 			requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-			setContentView(R.layout.activity_home);
-			myLists = new ArrayList<BeanMog>();
-			ArrayAdapter<BeanMog> adapter = new ArrayAdapter<BeanMog>(this,
-					R.layout.list_mog_layout, myLists);
+			setContentView(R.layout.activity_show_tasks);
+			myTasks = new ArrayList<BeanTask>();
+			ArrayAdapter<BeanTask> adapter = new ArrayAdapter<BeanTask>(this, // R.layout.activity_show_tasks
+					android.R.layout.simple_list_item_1, myTasks);
 			setListAdapter(adapter);
-			refreshMogLists();
+			refreshTasks();
 
-			newList = (Button) findViewById(R.id.btnNewList);
+			newTask = (Button) findViewById(R.id.btnNewTask);
 
-			// Launch the activity to add a new list
-			newList.setOnClickListener(new View.OnClickListener() {
+			// Launch the activity to add a new task
+			newTask.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View arg) {
-					Intent newListScreen = new Intent(getApplicationContext(),
-							NewListActivity.class);
-					startActivity(newListScreen);
+					Intent newTaskScreen = new Intent(getApplicationContext(),
+							NewTasksActivity.class);
+					startActivity(newTaskScreen);
 				}
 			});
 		}
 	}
 
-	private void refreshMogLists() {
+	private void refreshTasks() {
 
 		// Retrieve data
-		ParseQuery<ParseObject> query = ParseQuery.getQuery("MogList");
-		query.whereEqualTo("viewers", ParseUser.getCurrentUser());
-		query.addAscendingOrder("nameList");
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("MogTask");
+		query.whereEqualTo("idMogList", id);
+		query.addAscendingOrder("nameTask");
 		setProgressBarIndeterminateVisibility(true);
 
 		query.findInBackground(new FindCallback<ParseObject>() {
-			@SuppressWarnings("unchecked")
+			@SuppressWarnings({ "unchecked", "deprecation" })
 			@Override
 			public void done(List<ParseObject> maList, ParseException e) {
 				setProgressBarIndeterminateVisibility(false);
 				if (e == null) {
 					// If there are results, update the list
 					// and notify the adapter
-					myLists.clear();
+					myTasks.clear();
 					for (ParseObject po : maList) {
-						BeanMog mog = new BeanMog(po.getObjectId(), po.getString("nameList"));
-						myLists.add(mog);
+						BeanTask task = new BeanTask(po.getObjectId(), po
+								.getString("nameTask"), po
+								.getString("idMogList"), po.getDate("termDate").toLocaleString());
+						myTasks.add(task);
 					}
-					((ArrayAdapter<BeanMog>) getListAdapter())
+					((ArrayAdapter<BeanTask>) getListAdapter())
 							.notifyDataSetChanged();
 				} else {
 					Log.d(getClass().getSimpleName(),
@@ -84,30 +89,24 @@ public class HomeActivity extends ListActivity {
 	}
 
 	@Override
-	protected void onListItemClick(ListView l, View v, int position, long id) {
-	    BeanMog mog = myLists.get(position);
-	    Intent intent = new Intent(this, ShowTasksActivity.class);
-	    intent.putExtra("mogListId", mog.getListId());
-	    startActivity(intent);
-	}
-	
-	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.home, menu);
+		getMenuInflater().inflate(R.menu.show_tasks, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle item selection
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
 		switch (item.getItemId()) {
 		case R.id.action_refresh:
-			refreshMogLists();
+			refreshTasks();
 			return true;
-		case R.id.action_new:
+		case R.id.action_new_task:
 			startActivity(new Intent(getApplicationContext(),
-					NewListActivity.class));
+					NewTasksActivity.class));
 			return true;
 		case R.id.action_logout:
 			ParseUser.logOut();

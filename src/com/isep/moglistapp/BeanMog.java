@@ -1,11 +1,11 @@
 package com.isep.moglistapp;
 
-public class ListMog {
+public class BeanMog {
 
 	private String listId;
 	private String listName;
 
-	public ListMog(String theListId, String theListName) {
+	public BeanMog(String theListId, String theListName) {
         listId = theListId;
         listName = theListName;
     }

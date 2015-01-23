@@ -8,9 +8,11 @@
     <string name="register">Inscription</string>
     <string name="title_activity_new_list">Nouvelle liste</string>
     <string name="title_activity_connexion">Connexion</string>
-    <string name="title_activity_my_lists">Mes Listes</string>
+    <string name="title_activity_home">Listes</string>
     <string name="action_new">Nouvelle Liste</string>
+    <string name="action_new_task">Nouvelle Tâche</string>
     <string name="newList">Créer une nouvelle liste</string>
+    <string name="newTask">Ajouter une tâche</string>
     <string name="action_refresh">Refresh</string>
     <string name="action_logout">Logout</string>
     <string name="bell">notif</string>
@@ -19,6 +21,8 @@
     <string name="go">Go !</string>
     <string name="mdp">Mot de Passe</string>
     <string name="mdp2">Confirmer le mot de Passe</string>
-    
-</resources><!-- pour colorer le texte + voir styles.xml    <color name="color_title">#FF8800</color> -->
+    <string name="title_activity_show_tasks">Tâches</string>
+    <string name="hello_world">Hello world!</string>
+
+</resources> <!-- pour colorer le texte + voir styles.xml    <color name="color_title">#FF8800</color> -->
 
