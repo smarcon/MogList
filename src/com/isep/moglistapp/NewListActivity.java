@@ -1,89 +1,96 @@
 package com.isep.moglistapp;
 
+import java.util.List;
+
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.Toast;
+
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseRelation;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 public class NewListActivity extends Activity {
-	private ImageView backImg;
-	private LinearLayout addPeople;
-	private ListView peopleAddedList;
-    private static final int TEXT_ID = 0;
-    private Button addList;
-	
-	public void onCreate(Bundle savedInstanceState){
+	private Button addList;
+	private EditText listName = null;
+	private EditText friendMail = null;
+	private ParseUser user;
+	private ParseRelation<ParseObject> relation;
+
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_newlist);
-		backImg = (ImageView) findViewById(R.id.back);
-		addPeople = (LinearLayout) findViewById(R.id.add_people);
-		peopleAddedList = (ListView) findViewById(R.id.list_people);
 		addList = (Button) findViewById(R.id.add_list);
-		
-		backImg.setOnClickListener(new View.OnClickListener(){
-			public void onClick(View img){
-				finish();
-			}
-		});
-		
-		String[] peopleAdded = new String[] { "personne1","personne2"};
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, peopleAdded);
-		peopleAddedList.setAdapter(adapter);
-		
-		addPeople.setOnClickListener(new View.OnClickListener(){
-			public void onClick(View layout){
-				createDialog();
-			}
-		});
-	    
+	//	listName = (EditText) findViewById(R.id.listName);
+		//friendMail = (EditText) findViewById(R.id.friend);
+
 		addList.setOnClickListener(new View.OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
-				Intent addTasksScreen = new Intent(getApplicationContext(), NewTasksActivity.class);	
-				startActivity(addTasksScreen);
+				if (listName.length() > 3) {
+					// insert list in parse
+					ParseObject mog = new ParseObject("MogList");
+					mog.put("nameList", listName);
+					relation = mog.getRelation("viewers");
+					relation.add(ParseUser.getCurrentUser());
+
+					if (friendMail.length() > 2) {
+						@SuppressWarnings("deprecation")
+						ParseQuery<ParseUser> queryUser = ParseUser.getQuery();
+						queryUser.whereEqualTo("email", friendMail);
+						queryUser.setLimit(1);
+						user = new ParseUser();
+						queryUser
+								.findInBackground(new FindCallback<ParseUser>() {
+									public void done(List<ParseUser> objects,
+											ParseException e) {
+										if (e == null) {
+											// The query was successful.
+											user = objects.get(0);
+											relation.add(user);
+										}
+									}
+								});
+					}
+
+					mog.saveInBackground(new SaveCallback() {
+						public void done(ParseException e) {
+							if (e == null) {
+								// Saved successfully.
+								Toast.makeText(getApplicationContext(),
+										"Saved", Toast.LENGTH_SHORT).show();
+
+								// let's add tasks now
+								Intent addTasksScreen = new Intent(
+										getApplicationContext(),
+										NewTasksActivity.class);
+								startActivity(addTasksScreen);
+							} else {
+								// The save failed.
+								Toast.makeText(getApplicationContext(),
+										"Failed to Save", Toast.LENGTH_SHORT)
+										.show();
+							}
+						}
+					});
+
+				} else {
+					Toast.makeText(
+							getApplicationContext(),
+							"Erreur: le nom de la liste doit contenir plus de 3 caractères",
+							Toast.LENGTH_LONG).show();
+				}
+
 			}
 		});
-		}		
-		
-		private Dialog createDialog(){
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setTitle("Partager la liste");
-			builder.setMessage("Nom ou email de la personne?");
-			
-			// Use an EditText view to get user input.
-	         final EditText input = new EditText(this);
-	         input.setId(TEXT_ID);
-	         builder.setView(input);
-	         
-	         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-	        	 
-	             @Override
-	             public void onClick(DialogInterface dialog, int whichButton) {
-	                 String value = input.getText().toString();
-	                 Log.d("DialogActivity", "User name: " + value);
-	                 return;
-	             }
-	         });
-	  
-	         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-	  
-	             @Override
-	             public void onClick(DialogInterface dialog, int which) {
-	                 return;
-	             }
-	         });
-	  
-	         return builder.show();
-	};
+	}
+
 }

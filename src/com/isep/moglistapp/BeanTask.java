@@ -1,17 +1,21 @@
 package com.isep.moglistapp;
 
+import java.util.Date;
+
 public class BeanTask {
 	private String idTask;
 	private String nameTask;
 	private String idMogList;
 	private String termDate;
+	private Date dt;
 
 	public BeanTask(String theTaskId, String theTaskName, String theMogListId,
-			String theTermDate) {
+			String theTermDate, Date theDt) {
 		idTask = theTaskId;
 		nameTask = theTaskName;
 		termDate = theTermDate;
 		idMogList = theMogListId;
+		setDt(theDt);
 	}
 
 	public String getIdTask() {
@@ -39,7 +43,7 @@ public class BeanTask {
 	}
 
 	public String getTermDate() {
-		return termDate == null ? "" : "\n" + termDate;
+		return termDate == null ? "" : "\n" + termDate.substring(0, termDate.length()-9);
 	}
 
 	public void setTermDate(String termDate) {
@@ -49,6 +53,14 @@ public class BeanTask {
 	@Override
 	public String toString() {
 		return this.getNameTask() + this.getTermDate();
+	}
+
+	public Date getDt() {
+		return dt;
+	}
+
+	public void setDt(Date dt) {
+		this.dt = dt;
 	}
 
 }

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/nameTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="190dp"
+        android:layout_toLeftOf="@+id/validate"
+        android:ems="10"
+        android:hint="@string/taskname"
+        android:inputType="textCapSentences|textAutoCorrect"
+        android:maxLines="1"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/termTask"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/nameTask"
+        android:layout_below="@+id/nameTask"
+        android:layout_marginLeft="5dp"
+        android:ems="10"
+        android:gravity="top"
+        android:hint="@string/taskterm" />
+
+    <Button
+        android:id="@+id/saveTask"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:text="@string/save" />
+
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/saveTask"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/termTask"
+        android:visibility="gone" />
+
+    <ImageButton
+        android:id="@+id/validate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/termTask"
+        android:layout_alignParentRight="true"
+        android:contentDescription="@string/go"
+        android:visibility="gone"
+        android:src="@drawable/ic_action_validate" />
+
+</RelativeLayout>

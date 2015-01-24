@@ -55,24 +55,24 @@
             android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
         <activity
-            android:name=".NewList"
-            android:label="@string/title_activity_new_list" >
-        </activity>
-        <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home" >
         </activity>
-        <activity
-            android:name=".ShowTasksActivity"
-            android:label="@string/title_activity_show_tasks" >
+        <activity android:name=".ShowTasksActivity" >
+        </activity>
+        <activity android:name=".NewOrEditTask" >
         </activity>
         <activity
             android:name=".RegisterActivity"
             android:label="@string/register" >
         </activity>
-        <activity android:name=".NewListActivity" >
+        <activity
+            android:name=".NewListActivity"
+            android:label="@string/newList" >
         </activity>
-        <activity android:name=".NewTasksActivity" >
+        <activity
+            android:name=".NewTasksActivity"
+            android:label="@string/newTask" >
         </activity>
 
         <service android:name="com.parse.PushService" />

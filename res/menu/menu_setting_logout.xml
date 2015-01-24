@@ -1,19 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.isep.moglistapp.HomeActivity" >
+    xmlns:tools="http://schemas.android.com/tools" >
 
-    <item
-        android:id="@+id/action_refresh"
-        android:icon="@drawable/ic_action_refresh"
-        android:showAsAction="always"
-        android:title="@string/action_refresh">
-    </item>
-    <item
-        android:id="@+id/action_new"
-        android:icon="@drawable/ic_action_new"
-        android:showAsAction="always|withText"
-        android:title="@string/action_new"/>
     <item
         android:id="@+id/bell"
         android:icon="@drawable/bell"
@@ -24,13 +11,13 @@
         android:id="@+id/action_settings"
         android:icon="@drawable/settings"
         android:orderInCategory="100"
-        android:showAsAction="always"
+        android:showAsAction="never"
         android:title="@string/action_settings"/>
     <item
         android:id="@+id/action_logout"
         android:icon="@drawable/logout"
         android:orderInCategory="100"
-        android:showAsAction="always"
+        android:showAsAction="never"
         android:title="@string/action_logout"/>
 
 </menu>

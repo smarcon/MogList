@@ -88,13 +88,14 @@ public class HomeActivity extends ListActivity {
 	    BeanMog mog = myLists.get(position);
 	    Intent intent = new Intent(this, ShowTasksActivity.class);
 	    intent.putExtra("mogListId", mog.getListId());
+	    intent.putExtra("mogListName", mog.getListName());
 	    startActivity(intent);
 	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.home, menu);
+		getMenuInflater().inflate(R.menu.menu_refresh_settings_logout, menu);
 		return true;
 	}
 
@@ -104,10 +105,6 @@ public class HomeActivity extends ListActivity {
 		switch (item.getItemId()) {
 		case R.id.action_refresh:
 			refreshMogLists();
-			return true;
-		case R.id.action_new:
-			startActivity(new Intent(getApplicationContext(),
-					NewListActivity.class));
 			return true;
 		case R.id.action_logout:
 			ParseUser.logOut();

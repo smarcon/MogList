@@ -5,7 +5,6 @@
     android:background="@drawable/background"
     android:orientation="vertical" >
 
-
     <Button
         android:id="@+id/btnNewTask"
         android:layout_width="fill_parent"
@@ -13,7 +12,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="14dp"
-        android:text="@string/newTask" />
+        android:text="@string/action_newTask" />
 
     <ListView
         android:id="@android:id/list"
