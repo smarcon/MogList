@@ -71,7 +71,7 @@ public final class R {
         public static final int activity_registration=0x7f030005;
         public static final int activity_show_tasks=0x7f030006;
         public static final int list_mog_layout=0x7f030007;
-        public static final int list_task_layout=0x7f030008;
+        public static final int list_tasks_layout=0x7f030008;
     }
     public static final class menu {
         public static final int home=0x7f070000;

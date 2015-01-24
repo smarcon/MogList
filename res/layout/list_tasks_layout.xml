@@ -6,7 +6,7 @@
     android:ellipsize="end"
     android:gravity="center_vertical"
     android:padding="5dp"
-    android:singleLine="true"
+    android:singleLine="false"
     android:textSize="20sp" >
     
 </TextView>

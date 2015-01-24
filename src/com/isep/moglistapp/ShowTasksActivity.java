@@ -37,8 +37,8 @@ public class ShowTasksActivity extends ListActivity {
 			requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 			setContentView(R.layout.activity_show_tasks);
 			myTasks = new ArrayList<BeanTask>();
-			ArrayAdapter<BeanTask> adapter = new ArrayAdapter<BeanTask>(this, // R.layout.activity_show_tasks
-					android.R.layout.simple_list_item_1, myTasks);
+			ArrayAdapter<BeanTask> adapter = new ArrayAdapter<BeanTask>(this,
+					R.layout.list_tasks_layout, myTasks);
 			setListAdapter(adapter);
 			refreshTasks();
 
@@ -73,9 +73,12 @@ public class ShowTasksActivity extends ListActivity {
 					// and notify the adapter
 					myTasks.clear();
 					for (ParseObject po : maList) {
+						String d = (po.getDate("termDate")) == null ? null
+								: (po.getDate("termDate")).toLocaleString();
+						;
 						BeanTask task = new BeanTask(po.getObjectId(), po
 								.getString("nameTask"), po
-								.getString("idMogList"), po.getDate("termDate").toLocaleString());
+								.getString("idMogList"), d);
 						myTasks.add(task);
 					}
 					((ArrayAdapter<BeanTask>) getListAdapter())

@@ -39,7 +39,7 @@ public class BeanTask {
 	}
 
 	public String getTermDate() {
-		return termDate == null ? "" : termDate;
+		return termDate == null ? "" : "\n" + termDate;
 	}
 
 	public void setTermDate(String termDate) {
@@ -48,7 +48,7 @@ public class BeanTask {
 
 	@Override
 	public String toString() {
-		return this.getNameTask() + "\n" + this.getTermDate();
+		return this.getNameTask() + this.getTermDate();
 	}
 
 }
