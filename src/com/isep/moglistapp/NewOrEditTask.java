@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -110,19 +112,51 @@ public class NewOrEditTask extends Activity {
 		ok.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				ParseQuery<ParseObject> query = ParseQuery.getQuery("MogTask");
-				query.getInBackground(taskId, new GetCallback<ParseObject>() {
-					public void done(ParseObject po, ParseException e) {
-						if (e == null) {
-							po.deleteInBackground();
-							intentOk.putExtra("mogListId", mogId);
-							intentOk.putExtra("mogListName", title);
-							startActivity(intentOk);
-						}
-					}
-				});
+				confirmDialog();
 			}
 		});
+	}
+
+	protected void confirmDialog() {
+		// Alert dialog
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+				this);
+		alertDialogBuilder
+				.setMessage("Etes-vous sûr de vouloir valider et supprimer cette tâche ?");
+		alertDialogBuilder.setPositiveButton("Oui",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
+						ParseQuery<ParseObject> query = ParseQuery
+								.getQuery("MogTask");
+						query.getInBackground(taskId,
+								new GetCallback<ParseObject>() {
+									public void done(ParseObject po,
+											ParseException e) {
+										if (e == null) {
+											po.deleteInBackground();
+											intentOk.putExtra("mogListId",
+													mogId);
+											intentOk.putExtra("mogListName",
+													title);
+											startActivity(intentOk);
+										}
+									}
+								});
+					}
+				});
+		alertDialogBuilder.setNegativeButton("Annuler",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						intentOk.putExtra("mogListId", mogId);
+						intentOk.putExtra("mogListName", title);
+						startActivity(intentOk);
+					}
+				});
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
+
 	}
 
 	private void saveTask() {

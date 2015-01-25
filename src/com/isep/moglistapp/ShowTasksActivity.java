@@ -3,7 +3,9 @@ package com.isep.moglistapp;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -71,67 +73,92 @@ public class ShowTasksActivity extends ListActivity {
 			delete.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					ParseQuery<ParseObject> query = ParseQuery
-							.getQuery("MogList");
-					query.getInBackground(id, new GetCallback<ParseObject>() {
-						public void done(ParseObject mog, ParseException e) {
-							if (e == null) {
-								ParseRelation<ParseObject> relation = mog
-										.getRelation("viewers");
-								try {
-									if (relation.getQuery().count() == 1) {
-										ParseObject.createWithoutData(
-												"MogList", id)
-												.deleteInBackground();
-										ParseQuery<ParseObject> queryTask = ParseQuery
-												.getQuery("MogTask");
-										queryTask.whereEqualTo("idMogList", id);
-										queryTask
-												.findInBackground(new FindCallback<ParseObject>() {
-													@Override
-													public void done(
-															List<ParseObject> po,
-															ParseException e2) {
-														for (ParseObject p : po) {
-															p.deleteInBackground();
-														}
-														Toast.makeText(
-																getApplicationContext(),
-																title
-																		+ " et ses tâches ont été supprimées.",
-																Toast.LENGTH_LONG)
-																.show();
-														startActivity(new Intent(
-																getApplicationContext(),
-																HomeActivity.class));
-													}
-												});
-									} else {
-										relation.remove(ParseUser
-												.getCurrentUser());
-										mog.saveInBackground(new SaveCallback() {
-											public void done(ParseException e) {
-												Toast.makeText(
-														getApplicationContext(),
-														title
-																+ " a été supprimée de vos listes.",
-														Toast.LENGTH_LONG)
-														.show();
-												startActivity(new Intent(
-														getApplicationContext(),
-														HomeActivity.class));
-											}
-										});
-									}
-								} catch (ParseException e1) {
-									Log.d("PARSE", e1.toString());
-								}
-							}
-						}
-					});
+					confirmDialog();
 				}
 			});
 		}
+
+	}
+
+	protected void confirmDialog() {
+		AlertDialog.Builder dialBuilder = new AlertDialog.Builder(this);
+		dialBuilder
+				.setMessage("Etes-vous sûr de vouloir supprimer cette liste ?");
+		dialBuilder.setNegativeButton("Annuler",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						Intent intent = new Intent(getApplicationContext(),
+								ShowTasksActivity.class);
+						intent.putExtra("mogListId", id);
+						intent.putExtra("mogListName", title);
+						startActivity(intent);
+					}
+				});
+		dialBuilder.setPositiveButton("Oui",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
+						deleteTask();
+					}
+				});
+		AlertDialog alertDialog = dialBuilder.create();
+		alertDialog.show();
+	}
+
+	protected void deleteTask() {
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("MogList");
+		query.getInBackground(id, new GetCallback<ParseObject>() {
+			public void done(ParseObject mog, ParseException e) {
+				if (e == null) {
+					ParseRelation<ParseObject> relation = mog
+							.getRelation("viewers");
+					try {
+						if (relation.getQuery().count() == 1) {
+							ParseObject.createWithoutData("MogList", id)
+									.deleteInBackground();
+							ParseQuery<ParseObject> queryTask = ParseQuery
+									.getQuery("MogTask");
+							queryTask.whereEqualTo("idMogList", id);
+							queryTask
+									.findInBackground(new FindCallback<ParseObject>() {
+										@Override
+										public void done(List<ParseObject> po,
+												ParseException e2) {
+											for (ParseObject p : po) {
+												p.deleteInBackground();
+											}
+											Toast.makeText(
+													getApplicationContext(),
+													title
+															+ " et ses tâches ont été supprimées.",
+													Toast.LENGTH_LONG).show();
+											startActivity(new Intent(
+													getApplicationContext(),
+													HomeActivity.class));
+										}
+									});
+						} else {
+							relation.remove(ParseUser.getCurrentUser());
+							mog.saveInBackground(new SaveCallback() {
+								public void done(ParseException e) {
+									Toast.makeText(
+											getApplicationContext(),
+											title
+													+ " a été supprimée de vos listes.",
+											Toast.LENGTH_LONG).show();
+									startActivity(new Intent(
+											getApplicationContext(),
+											HomeActivity.class));
+								}
+							});
+						}
+					} catch (ParseException e1) {
+						Log.d("PARSE", e1.toString());
+					}
+				}
+			}
+		});
 
 	}
 
