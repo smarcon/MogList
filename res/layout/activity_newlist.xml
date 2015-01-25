@@ -1,77 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background" >
-
-    <TextView
-        android:id="@+id/new_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="108dp"
-        android:layout_y="173dp"
-        android:text="Nouvelle liste"
-        android:textColor="#ff6600"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <ImageView
-        android:id="@+id/back"
-        android:layout_width="24dp"
-        android:layout_height="27dp"
-        android:layout_x="5dp"
-        android:layout_y="168dp"
-        android:src="@drawable/retour" />
+    android:background="@drawable/background"
+    android:orientation="vertical" >
 
     <EditText
-        android:id="@+id/name"
+        android:id="@+id/nameList"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="190dp"
+        android:ems="10"
+        android:hint="@string/listname"
+        android:inputType="textCapSentences|textAutoCorrect"
+        android:maxLines="1"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_x="60dp"
-        android:layout_y="204dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/shareTxt"
+        android:contentDescription="@string/share"
+        android:src="@drawable/add_people" />
+
+    <TextView
+        android:id="@+id/shareTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/imageView1"
+        android:layout_toRightOf="@+id/imageView1"
         android:ems="10"
-        android:hint="Nom de la liste"
-        android:textColor="#ff6600" >
+        android:hint="@string/sharetxt"
+        android:textColorHint="#ff6600" />
 
-        <requestFocus />
-    </EditText>
-
-    <ListView
-        android:id="@+id/list_people"
-        android:layout_width="227dp"
-        android:layout_height="108dp"
-        android:layout_x="54dp"
-        android:layout_y="238dp" >
-    </ListView>
-
-    <LinearLayout
-        android:id="@+id/add_people"
-        android:layout_width="222dp"
-        android:layout_height="32dp"
-        android:layout_x="53dp"
-        android:layout_y="373dp" >
-
-        <ImageView
-            android:id="@+id/people"
-            android:layout_width="35dp"
-            android:layout_height="22dp"
-            android:src="@drawable/add_people" />
-
-        <TextView
-            android:id="@+id/add"
-            android:layout_width="192dp"
-            android:layout_height="wrap_content"
-            android:text="Partager cette liste"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#ff6600" />
-    </LinearLayout>
+    <EditText
+        android:id="@+id/mailFriend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/shareTxt"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/shareTxt"
+        android:ems="10"
+        android:hint="@string/mailFriend"
+        android:inputType="textEmailAddress" />
 
     <Button
-        android:id="@+id/add_list"
-        android:layout_width="81dp"
-        android:layout_height="34dp"
-        android:layout_x="123dp"
-        android:layout_y="414dp"
-        android:text="Créer"
-        android:textColor="#ff6600" />
+        android:id="@+id/saveList"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:text="@string/save" />
 
-</AbsoluteLayout>
+</RelativeLayout>

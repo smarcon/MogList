@@ -16,6 +16,9 @@
     <string name="action_logout">Déconnexion</string>
     <string name="bell">notif</string>
     <string name="username">Nom d\'utilisateur</string>
+    <string name="sharetxt">Partager avec :</string>
+    <string name="share">Share</string>
+    <string name="listname">Nom de la liste</string>
     <string name="taskname">Nom de la tâche</string>
     <string name="taskterm">Echéance (facultatif)</string>
     <string name="mail">Email</string>
@@ -23,6 +26,8 @@
     <string name="go">Go !</string>
     <string name="mdp">Mot de Passe</string>
     <string name="mdp2">Confirmer le mot de Passe</string>
+    <string name="mailFriend">Email d\'un ami (facultatif)</string>
+    <string name="action_deleteList">Supprimer cette liste</string>
 
 </resources> <!-- pour colorer le texte + voir styles.xml    <color name="color_title">#FF8800</color> -->
 

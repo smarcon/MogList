@@ -5,6 +5,9 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,77 +23,136 @@ import com.parse.SaveCallback;
 
 public class NewListActivity extends Activity {
 	private Button addList;
-	private EditText listName = null;
-	private EditText friendMail = null;
+	private EditText listName;
+	private EditText friendMail;
+	private String name;
+	private String mail;
 	private ParseUser user;
 	private ParseRelation<ParseObject> relation;
+	private ParseObject mog;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.activity_newlist);
-		addList = (Button) findViewById(R.id.add_list);
-	//	listName = (EditText) findViewById(R.id.listName);
-		//friendMail = (EditText) findViewById(R.id.friend);
+		addList = (Button) findViewById(R.id.saveList);
+		listName = (EditText) findViewById(R.id.nameList);
+		friendMail = (EditText) findViewById(R.id.mailFriend);
 
 		addList.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (listName.length() > 3) {
-					// insert list in parse
-					ParseObject mog = new ParseObject("MogList");
-					mog.put("nameList", listName);
-					relation = mog.getRelation("viewers");
-					relation.add(ParseUser.getCurrentUser());
-
-					if (friendMail.length() > 2) {
-						@SuppressWarnings("deprecation")
-						ParseQuery<ParseUser> queryUser = ParseUser.getQuery();
-						queryUser.whereEqualTo("email", friendMail);
-						queryUser.setLimit(1);
-						user = new ParseUser();
-						queryUser
-								.findInBackground(new FindCallback<ParseUser>() {
-									public void done(List<ParseUser> objects,
-											ParseException e) {
-										if (e == null) {
-											// The query was successful.
-											user = objects.get(0);
-											relation.add(user);
-										}
-									}
-								});
-					}
-
-					mog.saveInBackground(new SaveCallback() {
-						public void done(ParseException e) {
-							if (e == null) {
-								// Saved successfully.
-								Toast.makeText(getApplicationContext(),
-										"Saved", Toast.LENGTH_SHORT).show();
-
-								// let's add tasks now
-								Intent addTasksScreen = new Intent(
-										getApplicationContext(),
-										NewTasksActivity.class);
-								startActivity(addTasksScreen);
-							} else {
-								// The save failed.
-								Toast.makeText(getApplicationContext(),
-										"Failed to Save", Toast.LENGTH_SHORT)
-										.show();
-							}
-						}
-					});
-
-				} else {
-					Toast.makeText(
-							getApplicationContext(),
-							"Erreur: le nom de la liste doit contenir plus de 3 caractères",
-							Toast.LENGTH_LONG).show();
-				}
-
+				saveList();
 			}
 		});
 	}
 
+	private void saveList() {
+		name = listName.getText().toString();
+		mail = friendMail.getText().toString();
+		mog = new ParseObject("MogList");
+		Log.d("MAIL", mail + mail.length());
+		if (name.length() > 2) {
+			// insert list in parse
+			mog.put("nameList", name);
+			relation = mog.getRelation("viewers");
+			relation.add(ParseUser.getCurrentUser());
+			if (mail.length() > 0) {
+				@SuppressWarnings("deprecation")
+				ParseQuery<ParseUser> queryUser = ParseUser.getQuery();
+				queryUser.whereEqualTo("email", mail);
+				user = new ParseUser();
+				queryUser.findInBackground(new FindCallback<ParseUser>() {
+					public void done(List<ParseUser> objects, ParseException e) {
+						if (e == null) {
+							// The query was successful.
+							try {
+								Log.d("DEBUG ID PARSE USER", objects.get(0)
+										.getObjectId());
+								user = objects.get(0);
+								relation.add(user);
+								saveInBackGround(mog, 1);
+							} catch (Exception e2) {
+								saveInBackGround(mog, 2);
+							}
+						} else {
+							Log.d("DEBUG ERROR PARSE MAIL", e.toString());
+						}
+					}
+				});
+			} else {
+				saveInBackGround(mog, 0);
+			}
+		} else {
+			Toast.makeText(getApplicationContext(),"Erreur: le nom de la liste doit contenir plus de 3 caractères", Toast.LENGTH_LONG).show();
+		}
+
+	}
+
+	private void saveInBackGround(final ParseObject mog2, final int mail2) {
+		// 0=mailMissing 1=mailOK 2=mailWrong
+		mog2.saveInBackground(new SaveCallback() {
+			public void done(ParseException e) {
+				if (e == null) {
+					String msg = null;
+					// Saved successfully.
+					switch (mail2) {
+					case 0:
+						msg = "";
+						break;
+					case 1:
+						msg="Votre ami a été notifié.";
+						break;
+					case 2:
+						msg="L'email que vous avez renseigné nous est inconnu.";
+						break;
+					}
+					Log.d("MSG",msg);
+					Toast.makeText(
+							getApplicationContext(),
+							"Votre liste "
+									+ name
+									+ " a été sauvegardée, vous pouvez y ajouter des tâches.\n"+msg,
+							Toast.LENGTH_LONG).show();
+					// let's add tasks now
+					Intent addTasksScreen = new Intent(getApplicationContext(),
+							NewOrEditTask.class);
+					addTasksScreen.putExtra("mogId", mog2.getObjectId());
+					addTasksScreen.putExtra("title", name);
+					startActivity(addTasksScreen);
+				} else {
+					// The save failed.
+					Toast.makeText(getApplicationContext(), "Failed to Save",
+							Toast.LENGTH_LONG).show();
+				}
+			}
+		});
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.menu_setting_logout, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			startActivity(new Intent(this, HomeActivity.class));
+			return true;
+		case R.id.action_logout:
+			ParseUser.logOut();
+			startActivity(new Intent(this, Connexion.class));
+			return true;
+		case R.id.action_settings:
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
 }

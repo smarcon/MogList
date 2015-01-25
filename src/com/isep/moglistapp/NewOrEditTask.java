@@ -54,7 +54,6 @@ public class NewOrEditTask extends Activity {
 		Calendar cal2 = Calendar.getInstance();
 		long ms = cal2.getTimeInMillis();
 		milli = intentReceived.getLongExtra("dt", ms);
-
 		super.onCreate(savedInstanceState);
 
 		// bouton retour
@@ -128,7 +127,6 @@ public class NewOrEditTask extends Activity {
 
 	private void saveTask() {
 		name = taskNameEditText.getText().toString();
-
 		if (name.length() < 3) {
 			Toast.makeText(getApplicationContext(),
 					"Erreur : le nom doit contenir au moins 3 caractères",

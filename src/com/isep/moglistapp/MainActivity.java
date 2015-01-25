@@ -33,10 +33,12 @@ public class MainActivity extends Activity {
 		Date d = new Date();
 		d.setHours(d.getHours() + 1);
 		testObject.put("date", d);
-		testObject.saveInBackground();
 		if (ParseUser.getCurrentUser() == null) {
+			testObject.saveInBackground();
 			startActivity(new Intent(this, Connexion.class));
 		} else {
+			testObject.put("user", ParseUser.getCurrentUser());
+			testObject.saveInBackground();
 			Intent HomeScreen = new Intent(this, HomeActivity.class);
 			HomeScreen.putExtra("name", ParseUser.getCurrentUser()
 					.getUsername());

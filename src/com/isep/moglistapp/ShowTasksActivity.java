@@ -14,15 +14,20 @@ import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseRelation;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 public class ShowTasksActivity extends ListActivity {
 	private Button newTask;
+	private Button delete;
 	private List<BeanTask> myTasks;
 	private Intent i;
 	private String id;
@@ -50,9 +55,8 @@ public class ShowTasksActivity extends ListActivity {
 			setListAdapter(adapter);
 			refreshTasks();
 
-			newTask = (Button) findViewById(R.id.btnNewTask);
-
 			// Launch the activity to add a new task
+			newTask = (Button) findViewById(R.id.btnNewTask);
 			newTask.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View arg) {
 					Intent newTaskScreen = new Intent(getApplicationContext(),
@@ -62,7 +66,73 @@ public class ShowTasksActivity extends ListActivity {
 					startActivity(newTaskScreen);
 				}
 			});
+
+			delete = (Button) findViewById(R.id.btnDeleteList);
+			delete.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					ParseQuery<ParseObject> query = ParseQuery
+							.getQuery("MogList");
+					query.getInBackground(id, new GetCallback<ParseObject>() {
+						public void done(ParseObject mog, ParseException e) {
+							if (e == null) {
+								ParseRelation<ParseObject> relation = mog
+										.getRelation("viewers");
+								try {
+									if (relation.getQuery().count() == 1) {
+										ParseObject.createWithoutData(
+												"MogList", id)
+												.deleteInBackground();
+										ParseQuery<ParseObject> queryTask = ParseQuery
+												.getQuery("MogTask");
+										queryTask.whereEqualTo("idMogList", id);
+										queryTask
+												.findInBackground(new FindCallback<ParseObject>() {
+													@Override
+													public void done(
+															List<ParseObject> po,
+															ParseException e2) {
+														for (ParseObject p : po) {
+															p.deleteInBackground();
+														}
+														Toast.makeText(
+																getApplicationContext(),
+																title
+																		+ " et ses tâches ont été supprimées.",
+																Toast.LENGTH_LONG)
+																.show();
+														startActivity(new Intent(
+																getApplicationContext(),
+																HomeActivity.class));
+													}
+												});
+									} else {
+										relation.remove(ParseUser
+												.getCurrentUser());
+										mog.saveInBackground(new SaveCallback() {
+											public void done(ParseException e) {
+												Toast.makeText(
+														getApplicationContext(),
+														title
+																+ " a été supprimée de vos listes.",
+														Toast.LENGTH_LONG)
+														.show();
+												startActivity(new Intent(
+														getApplicationContext(),
+														HomeActivity.class));
+											}
+										});
+									}
+								} catch (ParseException e1) {
+									Log.d("PARSE", e1.toString());
+								}
+							}
+						}
+					});
+				}
+			});
 		}
+
 	}
 
 	private void refreshTasks() {
@@ -111,7 +181,8 @@ public class ShowTasksActivity extends ListActivity {
 				.getTermDate().substring(1));
 		intent.putExtra("title", title);
 		intent.putExtra("mogId", id);
-		intent.putExtra("dt",(task.getDt()==null)?"":task.getDt().getTime());
+		intent.putExtra("dt", (task.getDt() == null) ? "" : task.getDt()
+				.getTime());
 		startActivity(intent);
 	}
 
