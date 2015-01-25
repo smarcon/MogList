@@ -9,17 +9,10 @@
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btnNewTask"
+        android:layout_above="@+id/ll"
         android:layout_alignParentLeft="true"
         android:layout_marginTop="190dp" >
     </ListView>
-
-    <Button
-        android:id="@+id/btnNewTask"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btnDeleteList"
-        android:text="@string/action_newTask" />
 
     <Button
         android:id="@+id/btnDeleteList"
@@ -28,5 +21,25 @@
         android:layout_alignParentBottom="true"
         android:text="@string/action_deleteList"
         android:textColor="#ff0000" />
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnDeleteList" >
+
+        <Button
+            android:id="@+id/btnNewTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_newTask" />
+
+        <Button
+            android:id="@+id/shareL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/shareL" />
+
+    </LinearLayout>
 
 </RelativeLayout>

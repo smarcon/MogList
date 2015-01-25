@@ -13,7 +13,6 @@
         android:layout_centerHorizontal="true"
         android:ems="10"
         android:hint="@string/username"
-        android:inputType="textAutoCorrect"
         android:maxLines="1"
         android:textColor="#ff6600" />
 

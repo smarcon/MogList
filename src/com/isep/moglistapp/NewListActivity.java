@@ -5,7 +5,6 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,7 +50,6 @@ public class NewListActivity extends Activity {
 		name = listName.getText().toString();
 		mail = friendMail.getText().toString();
 		mog = new ParseObject("MogList");
-		Log.d("MAIL", mail + mail.length());
 		if (name.length() > 2) {
 			// insert list in parse
 			mog.put("nameList", name);
@@ -60,15 +58,17 @@ public class NewListActivity extends Activity {
 			if (mail.length() > 0) {
 				@SuppressWarnings("deprecation")
 				ParseQuery<ParseUser> queryUser = ParseUser.getQuery();
-				queryUser.whereEqualTo("email", mail);
+				if (mail.contains("@")) {
+					queryUser.whereEqualTo("email", mail);
+				} else {
+					queryUser.whereEqualTo("username", mail);
+				}
 				user = new ParseUser();
 				queryUser.findInBackground(new FindCallback<ParseUser>() {
 					public void done(List<ParseUser> objects, ParseException e) {
 						if (e == null) {
 							// The query was successful.
 							try {
-								Log.d("DEBUG ID PARSE USER", objects.get(0)
-										.getObjectId());
 								user = objects.get(0);
 								relation.add(user);
 								saveInBackGround(mog, 1);
@@ -76,7 +76,7 @@ public class NewListActivity extends Activity {
 								saveInBackGround(mog, 2);
 							}
 						} else {
-							Log.d("DEBUG ERROR PARSE MAIL", e.toString());
+							
 						}
 					}
 				});
@@ -95,7 +95,6 @@ public class NewListActivity extends Activity {
 			public void done(ParseException e) {
 				if (e == null) {
 					String msg = null;
-					// Saved successfully.
 					switch (mail2) {
 					case 0:
 						msg = "";
@@ -104,10 +103,9 @@ public class NewListActivity extends Activity {
 						msg="Votre ami a été notifié.";
 						break;
 					case 2:
-						msg="L'email que vous avez renseigné nous est inconnu.";
+						msg="Désolé, cet utilisateur nous est inconnu. Vous pouvez réessayer.";
 						break;
 					}
-					Log.d("MSG",msg);
 					Toast.makeText(
 							getApplicationContext(),
 							"Votre liste "

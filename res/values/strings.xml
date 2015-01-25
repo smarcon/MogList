@@ -17,6 +17,7 @@
     <string name="bell">notif</string>
     <string name="username">Nom d\'utilisateur</string>
     <string name="sharetxt">Partager avec :</string>
+    <string name="shareL">Partager</string>
     <string name="share">Share</string>
     <string name="listname">Nom de la liste</string>
     <string name="taskname">Nom de la tâche</string>
@@ -26,8 +27,11 @@
     <string name="go">Go !</string>
     <string name="mdp">Mot de Passe</string>
     <string name="mdp2">Confirmer le mot de Passe</string>
-    <string name="mailFriend">Email d\'un ami (facultatif)</string>
+    <string name="mailF">Email ou nom d\'utilisateur</string>
+    <string name="mailFriend">Email ou nom d\'utilisateur (facultatif)</string>
     <string name="action_deleteList">Supprimer cette liste</string>
+    <string name="title_activity_share">ShareActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources> <!-- pour colorer le texte + voir styles.xml    <color name="color_title">#FF8800</color> -->
 

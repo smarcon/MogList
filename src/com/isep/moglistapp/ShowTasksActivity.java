@@ -30,6 +30,7 @@ import com.parse.SaveCallback;
 public class ShowTasksActivity extends ListActivity {
 	private Button newTask;
 	private Button delete;
+	private Button share;
 	private List<BeanTask> myTasks;
 	private Intent i;
 	private String id;
@@ -74,6 +75,18 @@ public class ShowTasksActivity extends ListActivity {
 				@Override
 				public void onClick(View v) {
 					confirmDialog();
+				}
+			});
+			
+			share=(Button) findViewById(R.id.shareL);
+			share.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent share = new Intent(getApplicationContext(),
+							ShareActivity.class);
+					share.putExtra("title", title);
+					share.putExtra("mogId", id);
+					startActivity(share);
 				}
 			});
 		}
