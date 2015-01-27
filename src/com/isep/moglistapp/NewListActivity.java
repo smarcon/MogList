@@ -5,16 +5,20 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
@@ -33,6 +37,7 @@ public class NewListActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		setContentView(R.layout.activity_newlist);
 		addList = (Button) findViewById(R.id.saveList);
 		listName = (EditText) findViewById(R.id.nameList);
@@ -76,7 +81,7 @@ public class NewListActivity extends Activity {
 								saveInBackGround(mog, 2);
 							}
 						} else {
-							
+
 						}
 					}
 				});
@@ -84,7 +89,10 @@ public class NewListActivity extends Activity {
 				saveInBackGround(mog, 0);
 			}
 		} else {
-			Toast.makeText(getApplicationContext(),"Erreur: le nom de la liste doit contenir plus de 3 caractères", Toast.LENGTH_LONG).show();
+			Toast.makeText(
+					getApplicationContext(),
+					"Erreur: le nom de la liste doit contenir plus de 3 caractères",
+					Toast.LENGTH_LONG).show();
 		}
 
 	}
@@ -92,6 +100,7 @@ public class NewListActivity extends Activity {
 	private void saveInBackGround(final ParseObject mog2, final int mail2) {
 		// 0=mailMissing 1=mailOK 2=mailWrong
 		mog2.saveInBackground(new SaveCallback() {
+			@SuppressWarnings({ "static-access", "deprecation" })
 			public void done(ParseException e) {
 				if (e == null) {
 					String msg = null;
@@ -100,18 +109,58 @@ public class NewListActivity extends Activity {
 						msg = "";
 						break;
 					case 1:
-						msg="Votre ami a été notifié.";
+						msg = "Votre ami a été notifié.";
+						// retrieve installation of friend
+						ParseQuery<ParseInstallation> query = ParseInstallation
+								.getQuery();
+						query.whereEqualTo("user", user);
+						query.findInBackground(new FindCallback<ParseInstallation>() {
+
+							@Override
+							public void done(List<ParseInstallation> objects,
+									ParseException e) {
+								if (e == null) {
+									objects.get(0).add("channels",
+											mog2.getObjectId());
+									objects.get(0).saveInBackground(
+											new SaveCallback() {
+												@Override
+												public void done(
+														ParseException e) {
+													Log.d("parseexception to save channels",
+															e.toString());
+												}
+											});
+								} else {
+									Log.d("parseexception get query install",
+											e.toString());
+								}
+							}
+						});
+						// create new push to send to friend
+						ParsePush push = new ParsePush();
+						push.setMessage(ParseUser.getCurrentUser()
+								.getUsername()
+								+ " partage la liste "
+								+ mog2.getString("nameList") + " avec vous !");
+						push.setQuery(query);
+
+						// subscribe current & friend to idlist channel
+						ParsePush.subscribeInBackground(mog2.getObjectId());
+						push.subscribeInBackground(mog2.getObjectId());
+
+						push.sendInBackground();
 						break;
 					case 2:
-						msg="Désolé, cet utilisateur nous est inconnu. Vous pouvez réessayer.";
+						msg = "Désolé, cet utilisateur nous est inconnu. Vous pouvez réessayer.";
 						break;
 					}
 					Toast.makeText(
 							getApplicationContext(),
 							"Votre liste "
 									+ name
-									+ " a été sauvegardée, vous pouvez y ajouter des tâches.\n"+msg,
-							Toast.LENGTH_LONG).show();
+									+ " a été sauvegardée, vous pouvez y ajouter des tâches.\n"
+									+ msg, Toast.LENGTH_LONG).show();
 					// let's add tasks now
 					Intent addTasksScreen = new Intent(getApplicationContext(),
 							NewOrEditTask.class);
@@ -141,13 +190,14 @@ public class NewListActivity extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			startActivity(new Intent(this, HomeActivity.class));
+			finish();
 			return true;
 		case R.id.action_logout:
 			ParseUser.logOut();
 			startActivity(new Intent(this, Connexion.class));
 			return true;
 		case R.id.action_settings:
+			startActivity(new Intent(this,MyAccount.class));
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

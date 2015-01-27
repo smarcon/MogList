@@ -13,11 +13,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -48,6 +50,7 @@ public class ShowTasksActivity extends ListActivity {
 
 			super.onCreate(savedInstanceState);
 			requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 			setContentView(R.layout.activity_show_tasks);
 			setTitle(title);
 			getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -128,8 +131,13 @@ public class ShowTasksActivity extends ListActivity {
 							.getRelation("viewers");
 					try {
 						if (relation.getQuery().count() == 1) {
-							ParseObject.createWithoutData("MogList", id)
-									.deleteInBackground();
+							mog.deleteInBackground(new DeleteCallback() {
+								
+								@Override
+								public void done(ParseException e) {
+									if (e!=null){Log.d("Parse delete mog",e.toString());}
+								}
+							});
 							ParseQuery<ParseObject> queryTask = ParseQuery
 									.getQuery("MogTask");
 							queryTask.whereEqualTo("idMogList", id);
@@ -240,7 +248,7 @@ public class ShowTasksActivity extends ListActivity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			startActivity(new Intent(this, HomeActivity.class));
+			finish();
 			return true;
 		case R.id.action_refresh:
 			refreshTasks();
@@ -250,6 +258,7 @@ public class ShowTasksActivity extends ListActivity {
 			startActivity(new Intent(this, Connexion.class));
 			return true;
 		case R.id.action_settings:
+			startActivity(new Intent(this,MyAccount.class));
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

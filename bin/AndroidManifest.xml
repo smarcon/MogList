@@ -27,22 +27,20 @@
     <uses-permission android:name="com.isep.moglistapp.permission.C2D_MESSAGE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
-    <!--
-  IMPORTANT: Change "com.parse.starter.permission.C2D_MESSAGE" in the lines below
-  to match your app's package name + ".permission.C2D_MESSAGE".
-    -->
     <permission
         android:name="com.isep.moglistapp.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
     <application
+        android:name=".ParseApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -52,27 +50,41 @@
         <activity
             android:name=".Connexion"
             android:label="@string/title_activity_connexion"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
         <activity
             android:name=".HomeActivity"
-            android:label="@string/title_activity_home" >
+            android:label="@string/title_activity_home"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".ShowTasksActivity" >
+        <activity
+            android:name=".ShowTasksActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".NewOrEditTask" >
+        <activity
+            android:name=".NewOrEditTask"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:label="@string/register" >
+            android:label="@string/register"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".NewListActivity"
-            android:label="@string/newList" >
+            android:label="@string/newList"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".NewTasksActivity"
-            android:label="@string/newTask" >
+            android:label="@string/newTask"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ShareActivity"
+            android:label="@string/title_activity_share"
+            android:screenOrientation="portrait" >
         </activity>
 
         <service android:name="com.parse.PushService" />
@@ -104,9 +116,18 @@
             </intent-filter>
         </receiver>
 
+        <meta-data
+            android:name="com.parse.push.notification_icon"
+            android:resource="@drawable/push_icon" />
+
         <activity
-            android:name=".ShareActivity"
-            android:label="@string/title_activity_share" >
+            android:name=".EditList"
+            android:label="@string/title_activity_edit_list"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".MyAccount"
+            android:label="@string/title_activity_my_account" >
         </activity>
     </application>
 

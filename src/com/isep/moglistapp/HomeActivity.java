@@ -11,12 +11,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -33,6 +36,13 @@ public class HomeActivity extends ListActivity {
 			super.onCreate(savedInstanceState);
 			requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 			setContentView(R.layout.activity_home);
+
+			// Associate the device with a user
+			ParseInstallation installation = ParseInstallation
+					.getCurrentInstallation();
+			installation.put("user", ParseUser.getCurrentUser());
+			installation.saveInBackground();
+
 			myLists = new ArrayList<BeanMog>();
 			ArrayAdapter<BeanMog> adapter = new ArrayAdapter<BeanMog>(this,
 					R.layout.list_mog_layout, myLists);
@@ -50,6 +60,22 @@ public class HomeActivity extends ListActivity {
 				}
 			});
 		}
+		this.getListView().setLongClickable(true);
+		this.getListView().setOnItemLongClickListener(
+				new OnItemLongClickListener() {
+
+					@Override
+					public boolean onItemLongClick(AdapterView<?> parent,
+							View v, int position, long id) {
+						BeanMog mog = myLists.get(position);
+						Intent i = new Intent(getApplicationContext(),
+								EditList.class);
+						i.putExtra("mogListId", mog.getListId());
+						i.putExtra("mogListName", mog.getListName());
+						startActivity(i);
+						return true;
+					}
+				});
 	}
 
 	private void refreshMogLists() {
@@ -70,7 +96,8 @@ public class HomeActivity extends ListActivity {
 					// and notify the adapter
 					myLists.clear();
 					for (ParseObject po : maList) {
-						BeanMog mog = new BeanMog(po.getObjectId(), po.getString("nameList"));
+						BeanMog mog = new BeanMog(po.getObjectId(), po
+								.getString("nameList"));
 						myLists.add(mog);
 					}
 					((ArrayAdapter<BeanMog>) getListAdapter())
@@ -85,13 +112,14 @@ public class HomeActivity extends ListActivity {
 
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-	    BeanMog mog = myLists.get(position);
-	    Intent intent = new Intent(this, ShowTasksActivity.class);
-	    intent.putExtra("mogListId", mog.getListId());
-	    intent.putExtra("mogListName", mog.getListName());
-	    startActivity(intent);
+
+		BeanMog mog = myLists.get(position);
+		Intent intent = new Intent(this, ShowTasksActivity.class);
+		intent.putExtra("mogListId", mog.getListId());
+		intent.putExtra("mogListName", mog.getListName());
+		startActivity(intent);
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -111,6 +139,7 @@ public class HomeActivity extends ListActivity {
 			startActivity(new Intent(this, Connexion.class));
 			return true;
 		case R.id.action_settings:
+			startActivity(new Intent(this, MyAccount.class));
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

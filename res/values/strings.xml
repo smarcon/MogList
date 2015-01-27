@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">MogListApp</string>
+    <string name="app_name">Mog</string>
     <string name="action_settings">Réglages</string>
     <string name="login">Connexion</string>
     <string name="forgot_password">Mot de passe oublié ?</string>
+    <string name="reinit_password">Réinitialiser votre mot de passe</string>
     <string name="register">Inscription</string>
     <string name="title_activity_connexion">Connexion</string>
     <string name="title_activity_home">Mes Listes</string>
     <string name="newList">Nouvelle Liste</string>
     <string name="newTask">Nouvelle Tâche</string>
     <string name="action_newList">Ajouter une liste</string>
-    <string name="action_newTask">Ajouter une tâche</string>
+    <string name="action_newTask">Ajouter</string>
     <string name="action_refresh">Actualiser</string>
     <string name="action_logout">Déconnexion</string>
     <string name="bell">notif</string>
@@ -29,9 +30,12 @@
     <string name="mdp2">Confirmer le mot de Passe</string>
     <string name="mailF">Email ou nom d\'utilisateur</string>
     <string name="mailFriend">Email ou nom d\'utilisateur (facultatif)</string>
-    <string name="action_deleteList">Supprimer cette liste</string>
+    <string name="action_deleteList">Supprimer</string>
+    <string name="action_editList">Renommer</string>
     <string name="title_activity_share">ShareActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="background">Background</string>
+    <string name="title_activity_edit_list">Propriétés</string>
+    <string name="title_activity_my_account">Mon Compte</string>
 
-</resources> <!-- pour colorer le texte + voir styles.xml    <color name="color_title">#FF8800</color> -->
-
+</resources>

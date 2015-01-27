@@ -13,8 +13,10 @@
         android:layout_centerHorizontal="true"
         android:ems="10"
         android:hint="@string/username"
-        android:maxLines="1"
-        android:textColor="#ff6600" />
+        android:inputType="textAutoCorrect"
+        android:textColor="#ff6600" >
+        <requestFocus />
+    </EditText>
 
     <EditText
         android:id="@+id/password"
@@ -33,8 +35,7 @@
         android:id="@+id/lost_pwd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/password"
-        android:layout_below="@+id/password"
+        android:layout_below="@+id/login"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="17dp"
         android:onClick="lost_pwd"
@@ -47,9 +48,9 @@
         android:id="@+id/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/lost_pwd"
         android:layout_alignLeft="@+id/password"
         android:layout_alignRight="@+id/password"
+        android:layout_below="@+id/password"
         android:onClick="login"
         android:text="@string/go"
         android:textColor="#ff6600"

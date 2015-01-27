@@ -2,21 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
     android:orientation="vertical" >
-
-    <EditText
-        android:id="@+id/nameTask"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="190dp"
-        android:layout_toLeftOf="@+id/validate"
-        android:ems="10"
-        android:hint="@string/taskname"
-        android:inputType="textCapSentences|textAutoCorrect"
-        android:maxLines="1"
-        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/termTask"
@@ -48,14 +34,39 @@
         android:layout_below="@+id/termTask"
         android:visibility="gone" />
 
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/background"
+        android:src="@drawable/bcng2" />
+
+    <EditText
+        android:id="@+id/nameTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/validate"
+        android:layout_alignBottom="@+id/validate"
+        android:ems="10"
+        android:hint="@string/taskname"
+        android:inputType="textCapSentences|textAutoCorrect"
+        android:maxLines="1"
+        android:textSize="20sp" >
+
+        <requestFocus />
+    </EditText>
+
     <ImageButton
         android:id="@+id/validate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/termTask"
+        android:layout_below="@+id/imageView1"
         android:layout_alignParentRight="true"
         android:contentDescription="@string/go"
-        android:visibility="gone"
-        android:src="@drawable/ic_action_validate" />
+        android:src="@drawable/ic_action_validate"
+        android:visibility="invisible" />
 
 </RelativeLayout>

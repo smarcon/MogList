@@ -23,7 +23,7 @@
         android:id="@+id/action_logout"
         android:icon="@drawable/logout"
         android:orderInCategory="100"
-        android:showAsAction="never"
+        android:showAsAction="always"
         android:title="@string/action_logout"/>
 
 </menu>

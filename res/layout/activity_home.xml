@@ -2,9 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
     android:orientation="vertical" >
-
 
     <Button
         android:id="@+id/btnNewList"
@@ -12,7 +10,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="14dp"
         android:text="@string/action_newList" />
 
     <ListView
@@ -21,7 +18,17 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/btnNewList"
         android:layout_alignParentLeft="true"
-        android:layout_marginTop="190dp" >
+        android:layout_below="@+id/imageView1" >
+
     </ListView>
+
+    <ImageView
+        android:contentDescription="@string/background"
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/bcng2" />
 
 </RelativeLayout>

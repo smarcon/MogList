@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -24,6 +25,8 @@ public class Connexion extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getWindow().setSoftInputMode(
+				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		setContentView(R.layout.activity_connexion);
 		username = (EditText) findViewById(R.id.username);
 		password = (EditText) findViewById(R.id.password);
@@ -47,7 +50,8 @@ public class Connexion extends Activity {
 											HomeActivity.class);
 
 									// Sending data to another Activity
-									HomeScreen.putExtra("name", username.getText().toString());
+									HomeScreen.putExtra("name", username
+											.getText().toString());
 									startActivity(HomeScreen);
 								} else {
 									Toast.makeText(getBaseContext(),
@@ -83,7 +87,7 @@ public class Connexion extends Activity {
 									if (e == null) {
 										Toast.makeText(
 												getBaseContext(),
-												"Un mail a été envoyé pour réinitialiser votre mot de passe",
+												"Un mail vous a été envoyé pour réinitialiser votre mot de passe",
 												Toast.LENGTH_LONG).show();
 									} else {
 										Toast.makeText(

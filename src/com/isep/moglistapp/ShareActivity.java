@@ -9,13 +9,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
@@ -43,6 +46,7 @@ public class ShareActivity extends Activity {
 			id = i.getStringExtra("mogId");
 			title = i.getStringExtra("title");
 			super.onCreate(savedInstanceState);
+			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 			setContentView(R.layout.activity_share);
 			setTitle(title);
 			getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -101,12 +105,29 @@ public class ShareActivity extends Activity {
 	protected void saveInBackGround(final ParseObject mog2,
 			final boolean mailExist) {
 		mog2.saveInBackground(new SaveCallback() {
+			@SuppressWarnings({ "deprecation", "static-access" })
 			public void done(ParseException e) {
 				if (e == null) {
 					if (mailExist) {
 						Toast.makeText(getApplicationContext(),
-								"Votre ami a été notifié.", Toast.LENGTH_LONG)
-								.show();
+								"Votre ami a été notifié.", Toast.LENGTH_LONG).show();
+						//retrieve installation of friend
+						ParseQuery<ParseInstallation> query = ParseInstallation
+								.getQuery();
+						query.whereEqualTo("user", user);
+						//create new push to send to friend
+						ParsePush push = new ParsePush();
+						push.setMessage(ParseUser.getCurrentUser()
+								.getUsername()
+								+ " partage la liste "
+								+ mog2.getString("nameList") + " avec vous !");
+						push.setQuery(query);
+						
+						//subscribe current & friend to idlist channel
+						ParsePush.subscribeInBackground(mog2.getObjectId());
+						push.subscribeInBackground(mog2.getObjectId());
+						
+						push.sendInBackground();
 						Intent addTasksScreen = new Intent(
 								getApplicationContext(),
 								ShowTasksActivity.class);
@@ -142,13 +163,14 @@ public class ShareActivity extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			startActivity(new Intent(this, HomeActivity.class));
+			finish();
 			return true;
 		case R.id.action_logout:
 			ParseUser.logOut();
 			startActivity(new Intent(this, Connexion.class));
 			return true;
 		case R.id.action_settings:
+			startActivity(new Intent(this,MyAccount.class));
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
