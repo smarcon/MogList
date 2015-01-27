@@ -60,7 +60,8 @@ public class NewOrEditTask extends Activity {
 		super.onCreate(savedInstanceState);
 
 		// bouton retour
-		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		getWindow().setSoftInputMode(
+				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.activity_new_or_edit_task);
 		setTitle(title);
@@ -121,8 +122,7 @@ public class NewOrEditTask extends Activity {
 
 	protected void confirmDialog() {
 		// Alert dialog
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-				this);
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 		alertDialogBuilder
 				.setMessage("Etes-vous sûr de vouloir valider et supprimer cette tâche ?");
 		alertDialogBuilder.setPositiveButton("Oui",
@@ -235,14 +235,17 @@ public class NewOrEditTask extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			finish();
+			Intent intent = new Intent(this, ShowTasksActivity.class);
+			intent.putExtra("mogListId", mogId);
+			intent.putExtra("mogListName", title);
+			startActivity(intent);
 			return true;
 		case R.id.action_logout:
 			ParseUser.logOut();
 			startActivity(new Intent(this, Connexion.class));
 			return true;
 		case R.id.action_settings:
-			startActivity(new Intent(this,MyAccount.class));
+			startActivity(new Intent(this, MyAccount.class));
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

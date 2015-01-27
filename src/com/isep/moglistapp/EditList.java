@@ -141,7 +141,7 @@ public class EditList extends ListActivity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			finish();
+			startActivity(new Intent(this, HomeActivity.class));
 			return true;
 		case R.id.action_logout:
 			ParseUser.logOut();
